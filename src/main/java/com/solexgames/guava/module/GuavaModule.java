@@ -1,6 +1,9 @@
 package com.solexgames.guava.module;
 
 import com.solexgames.guava.GuavaSpigotPlugin;
+import com.solexgames.lib.acf.BaseCommand;
+
+import java.util.List;
 
 /**
  * @author GrowlyX
@@ -12,5 +15,7 @@ public interface GuavaModule {
     void onEnable(GuavaSpigotPlugin plugin);
 
     void onDisable();
+
+    List<BaseCommand> getCommands();
 
 }
