@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface GuavaModule {
 
-    void onEnable(GuavaSpigotPlugin plugin);
-
-    void onDisable();
-
     List<BaseCommand> getCommands();
+
+    default void onEnable(GuavaSpigotPlugin plugin) { }
+
+    default void onDisable() { }
 
 }

@@ -1,6 +1,7 @@
 package com.solexgames.guava;
 
 import lombok.experimental.UtilityClass;
+import org.bukkit.ChatColor;
 
 /**
  * @author GrowlyX
@@ -9,5 +10,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class GuavaSpigotConstants {
+
+    public static final String CHAT_PREFIX = ChatColor.GOLD + ChatColor.BOLD.toString() + "Crates " + ChatColor.GRAY + ChatColor.BOLD + "»" + " " + ChatColor.YELLOW;
 
 }

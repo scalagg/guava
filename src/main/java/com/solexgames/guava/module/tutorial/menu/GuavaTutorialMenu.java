@@ -4,6 +4,7 @@ import com.solexgames.core.util.external.Button;
 import com.solexgames.core.util.external.Menu;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,6 +21,8 @@ public class GuavaTutorialMenu extends Menu {
 
     @Override
     public Map<Integer, Button> getButtons(Player player) {
-        return null;
+        final Map<Integer, Button> buttonMap = new HashMap<>();
+
+        return buttonMap;
     }
 }
