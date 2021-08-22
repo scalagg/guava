@@ -3,6 +3,7 @@ package com.solexgames.guava.handler;
 import com.solexgames.core.util.BukkitUtil;
 import com.solexgames.guava.GuavaSpigotPlugin;
 import com.solexgames.guava.module.GuavaModule;
+import com.solexgames.kotlin.GuavaKotlinModule;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 

@@ -4,12 +4,15 @@ import com.google.common.base.Supplier;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.mongodb.client.model.Filters;
 import com.solexgames.guava.handler.ModuleHandler;
 import com.solexgames.guava.handler.StorageHandler;
 import com.solexgames.guava.module.GuavaModule;
 import com.solexgames.guava.player.impl.CachedGuavaPlayer;
 import com.solexgames.guava.player.impl.PersistentGuavaPlayer;
+import com.solexgames.kotlin.GuavaKotlinModule;
+import com.solexgames.lib.acf.ConditionFailedException;
 import com.solexgames.lib.acf.PaperCommandManager;
 import com.solexgames.lib.commons.game.PlayerCache;
 import com.solexgames.lib.commons.game.impl.BasicPlayerCache;
@@ -17,10 +20,12 @@ import me.lucko.helper.Events;
 import me.lucko.helper.plugin.ExtendedJavaPlugin;
 import lombok.Getter;
 import org.bson.Document;
+import org.bukkit.ChatColor;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.*;
 
@@ -47,12 +52,7 @@ public final class GuavaSpigotPlugin extends ExtendedJavaPlugin {
             .expireAfterAccess(60L, TimeUnit.SECONDS)
             .removalListener(notification -> {
                 this.getLogger().info("Removed " + notification.getKey() + " from the cache.");
-            }).build(CacheLoader.asyncReloading(new CacheLoader<UUID, CachedGuavaPlayer>() {
-                @Override
-                public CachedGuavaPlayer load(@NotNull UUID key) {
-                    return null;
-                }
-            }, this.executor));
+            }).build();
 
     @Override
     public void enable() {
@@ -62,9 +62,21 @@ public final class GuavaSpigotPlugin extends ExtendedJavaPlugin {
 
         this.commandManager = new PaperCommandManager(this);
         this.commandManager.enableUnstableAPI("help");
+        this.commandManager.getCommandContexts().registerContext(PersistentGuavaPlayer.class, k -> {
+            final String firstArg = k.popFirstArg();
+            final PersistentGuavaPlayer guavaPlayer = this.persistentPlayerCache.getByName(firstArg);
+
+            if (guavaPlayer == null) {
+                throw new ConditionFailedException(ChatColor.RED + "No player matching " + ChatColor.YELLOW + firstArg + ChatColor.RED + " is connected to the server.");
+            }
+
+            return guavaPlayer;
+        });
 
         this.moduleHandler = new ModuleHandler(this);
         this.moduleHandler.scanAndRegisterModules("com.solexgames.guava.module");
+
+        this.setupListeners();
     }
 
     @Override

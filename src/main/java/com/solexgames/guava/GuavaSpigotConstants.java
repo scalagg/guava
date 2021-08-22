@@ -11,6 +11,6 @@ import org.bukkit.ChatColor;
 @UtilityClass
 public class GuavaSpigotConstants {
 
-    public static final String CHAT_PREFIX = ChatColor.GOLD + ChatColor.BOLD.toString() + "Crates " + ChatColor.GRAY + ChatColor.BOLD + "»" + " " + ChatColor.YELLOW;
+    public static final String CHAT_PREFIX = ChatColor.GOLD + ChatColor.BOLD.toString() + "Guava " + ChatColor.GRAY + ChatColor.BOLD + "»" + " " + ChatColor.YELLOW;
 
 }

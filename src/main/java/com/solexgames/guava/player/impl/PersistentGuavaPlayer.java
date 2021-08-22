@@ -36,8 +36,6 @@ public class PersistentGuavaPlayer extends GuavaPlayer implements PersistentMode
                     }
                 });
             }
-
-//            this.crateKeys = CorePlugin.GSON.fromJson(document.getString("keys"), CratesConstants.STRING_INTEGER_MAP_TYPE);
         });
     }
 
